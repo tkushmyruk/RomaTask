@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StringValidator {
+    //Хранит патерны
     private static List<List<String>> patterns = new ArrayList<List<String>>();
 
     public static void main(String[] args) {
         createPattern("Best", new String[]{"banks"}, "China");
         System.out.println(validate("Best banks in China"));
     }
-
+ //Создает патерн и сохраняет в наш лист
     public static void createPattern(String top, String[] params, String in) {
         List<String> pattern = new ArrayList<String>();
         pattern.add(top.toLowerCase());
@@ -22,7 +23,7 @@ public class StringValidator {
 
         patterns.add(pattern);
     }
-
+// Полная проверка входящей стринги
     public static boolean validate(String query) {
         String[] criteries = query.split(" ");
         for (int i = 0; i < criteries.length; i++) {
@@ -44,7 +45,7 @@ public class StringValidator {
         return true;
 
     }
-
+    // Проверят сам формат чтоб сразу отсеяет если неправильно указан топ чтоб не лезть в коллекцию
     public static boolean topFormatValidate(String top) {
         if (top.equals("best") || top.equals("most") || top.equals("less")) {
             return true;
@@ -56,7 +57,7 @@ public class StringValidator {
 
         return false;
     }
-
+   //Для оптимизации сразу можно проверить по размерам коллекции и сделать ее меньше для следующих проверок
     public static List<List<String>> patternValidate(String[] params) {
         List<List<String>> list = new ArrayList<List<String>>();
         for (int i = 0; i < patterns.size(); i++) {
@@ -66,7 +67,7 @@ public class StringValidator {
         }
         return list;
     }
-
+    // Проверка топа на совпадение
     public static boolean topValidate(String top, List<List<String>> pattern) {
         for (int i = 0; i < pattern.size(); i++) {
             if (pattern.get(i).get(0).equals(top)) {
@@ -75,7 +76,7 @@ public class StringValidator {
         }
         return false;
     }
-
+  // проверка всех параметров
     public static boolean paramsValidate(List<List<String>> pattern, String[] criteries) {
         for (int i = 0; i < pattern.size(); i++) {
             for (int j = 1; j < criteries.length - 2; j++) {
@@ -90,7 +91,7 @@ public class StringValidator {
         }
         return false;
     }
-
+    // Проверка того что идет после in
     public static boolean inValidate(List<List<String>> pattern, String[] criteries) {
         for (int i = 0; i < pattern.size(); i++) {
             if (pattern.get(i).get(pattern.get(i).size() - 1).equals(criteries[criteries.length - 1])) {
